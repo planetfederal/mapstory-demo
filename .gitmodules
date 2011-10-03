@@ -13,3 +13,6 @@
 [submodule "externals/buildkit"]
 	path = externals/buildkit
 	url = git://github.com/tschaub/buildkit.git
+[submodule "app/static/externals/timemanager"]
+	path = app/static/externals/timemanager
+	url = git://github.com/MattPriour/TimeManager_OpenLayers-Addin.git
