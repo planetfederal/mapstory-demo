@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mexico Drug Violence</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="./favicon.ico">
+        
+        <!-- Ext resources -->
+        <link rel="stylesheet" type="text/css" href="externals/ext/resources/css/ext-all.css">
+        <link rel="stylesheet" type="text/css" href="externals/ext/resources/css/xtheme-gray.css">
+        <script type="text/javascript" src="externals/ext/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="externals/ext/ext-all.js"></script>
+
+        <!-- OpenLayers resources -->
+        <link rel="stylesheet" type="text/css" href="externals/openlayers/theme/default/style.css">
+        <script type="text/javascript" src="script/OpenLayers.js"></script>
+        <script type="text/javascript" src="script/timemanager.js"></script>
+
+        <!-- GeoExt resources -->
+        <link rel="stylesheet" type="text/css" href="externals/geoext/resources/css/popup.css">
+        <link rel="stylesheet" type="text/css" href="externals/geoext/resources/css/layerlegend.css">
+        <link rel="stylesheet" type="text/css" href="externals/geoext/resources/css/gxtheme-gray.css">
+        <script type="text/javascript" src="script/GeoExt.js"></script> 
+
+        <!-- gxp resources -->
+        <link rel="stylesheet" type="text/css" href="externals/gxp/src/theme/all.css">
+        <script type="text/javascript" src="script/gxp.js"></script> 
+        
+        <!-- ux resources -->
+        <script type="text/javascript" src="script/ux.js"></script>
+        
+        <!-- proj4js resources -->
+        <!--
+        <script type="text/javascript" src="externals/proj4js/lib/proj4js-compressed.js"></script>
+        -->
+
+        <!-- app resources -->
+        <link rel="stylesheet" type="text/css" href="theme/app/style.css">
+        <!--[if IE]><link rel="stylesheet" type="text/css" href="theme/app/ie.css"/><![endif]-->        
+        <script>
+            Ext.BLANK_IMAGE_URL = "theme/app/img/blank.gif";
+            OpenLayers.ImgPath = "externals/openlayers/img/";
+        </script>
+        <script>
+// this is where your application code goes
+
+var app;
+startTime = OpenLayers.Date.parse('2004-12-01').toISOString();
+Ext.onReady(function() {
+    app = new gxp.Viewer({
+        portalConfig: {
+            layout: "border",
+            region: "center",
+            
+            // by configuring items here, we don't need to configure portalItems
+            // and save a wrapping container
+            items: [{
+                id: "centerpanel",
+                xtype: "panel",
+                layout: "fit",
+                region: "center",
+                border: false,
+                items: ["mymap"]
+            }, {
+                id: "westpanel",
+                xtype: "container",
+                layout: "fit",
+                region: "west",
+                width: 200
+            }],
+            bbar: {id: "mybbar"}
+        },
+        
+        // configuration of all tool plugins for this application
+        tools: [{
+            ptype: "gxp_layertree",
+            outputConfig: {
+                id: "tree",
+                border: true,
+                tbar: [] // we will add buttons to "tree.bbar" later
+            },
+            outputTarget: "westpanel"
+        }, {
+            ptype: "gxp_zoomtoextent",
+            actionTarget: "map.tbar"
+        }, {
+            ptype: "gxp_zoom",
+            actionTarget: "map.tbar"
+        }, {
+            ptype: "gxp_navigationhistory",
+            actionTarget: "map.tbar"
+        },{
+            ptype:'gxp_playback'
+        }],
+        
+        // layer sources
+        defaultSourceType: "gxp_wmssource",
+        sources: {
+            ol: {
+                ptype:'gxp_olsource'
+            },
+            osm: {
+                ptype: "gxp_osmsource"
+            },
+            mapstory:{
+                url:'/geoserver/wms',
+                version:'1.1.1'
+            }
+        },
+        
+        // map and layers
+        map: {
+            id: "mymap", // id needed to reference map in portalConfig above
+            title: "Map",
+            region: 'center',
+            projection: "EPSG:900913",
+            units: "m",
+            maxResolution: 156543.0339,
+            center: [-10965000, 2623100],
+            zoom: 5,
+            layers: [{
+                source: "osm",
+                name: "mapnik",
+                group: "background"
+            }, {
+                source: "mapstory",
+                name:'mexmurder'
+            }],
+            items: [{
+                xtype: "gx_zoomslider",
+                vertical: true,
+                height: 100
+            }]
+        }
+
+    });
+});        
+        </script>
+    </head>
+    <body></body>
+</html>

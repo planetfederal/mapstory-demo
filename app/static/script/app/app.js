@@ -1,16 +1,4 @@
 Ext.ns('app');
-app.demos = [{
-    title: 'Hurricane Irene Track',
-    url: 'irene.html',
-    description: 'Tracked Object Time Animation example: The storm position,' +
-    'NexRad Radar, and storm wind classifications will change along with the time. Starts at Aug 17, 2011 and continues' +
-    'until Aug 29, 2011 or until you stop it'
-}/*,{
-    title: '',
-    url: '',
-    description: ''
-}*/
-]
 app.ds = new Ext.data.Store({
     reader: new Ext.data.JsonReader({
         fields: ['title', 'url', 'description']
