@@ -91,7 +91,10 @@ Ext.onReady(function() {
             ptype: "gxp_navigationhistory",
             actionTarget: "map.tbar"
         },{
-            ptype:'gxp_playback'
+            ptype:'gxp_playback',
+            outputConfig:{
+              dynamicRange:false
+            }
         }],
         
         // layer sources
@@ -125,7 +128,9 @@ Ext.onReady(function() {
                 group: "background"
             }, {
                 source: "mapstory",
-                name:'mexmurder'
+                name:'geonode:mexmurder',
+                tiled:false,
+                title:'Cumulative Murder Count'
             }],
             items: [{
                 xtype: "gx_zoomslider",
