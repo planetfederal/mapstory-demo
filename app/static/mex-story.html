@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mexico Drug Violence</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="./favicon.ico">
+        
+        <!-- Ext resources -->
+        <link rel="stylesheet" type="text/css" href="externals/ext/resources/css/ext-all.css">
+        <link rel="stylesheet" type="text/css" href="externals/ext/resources/css/xtheme-gray.css">
+        <script type="text/javascript" src="externals/ext/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="externals/ext/ext-all.js"></script>
+
+        <!-- OpenLayers resources -->
+        <link rel="stylesheet" type="text/css" href="externals/openlayers/theme/default/style.css">
+        <script type="text/javascript" src="script/OpenLayers.js"></script>
+        <script type="text/javascript" src="script/timemanager.js"></script>
+
+        <!-- GeoExt resources -->
+        <link rel="stylesheet" type="text/css" href="externals/geoext/resources/css/popup.css">
+        <link rel="stylesheet" type="text/css" href="externals/geoext/resources/css/layerlegend.css">
+        <link rel="stylesheet" type="text/css" href="externals/geoext/resources/css/gxtheme-gray.css">
+        <script type="text/javascript" src="script/GeoExt.js"></script> 
+
+        <!-- gxp resources -->
+        <link rel="stylesheet" type="text/css" href="externals/gxp/src/theme/all.css">
+        <script type="text/javascript" src="script/gxp.js"></script> 
+        
+        <!-- ux resources -->
+        <script type="text/javascript" src="script/ux.js"></script>
+        
+        <!-- proj4js resources -->
+        <!--
+        <script type="text/javascript" src="externals/proj4js/lib/proj4js-compressed.js"></script>
+        -->
+
+        <!-- app resources -->
+        <link rel="stylesheet" type="text/css" href="theme/app/style.css">
+        <!--[if IE]><link rel="stylesheet" type="text/css" href="theme/app/ie.css"/><![endif]-->        
+        <script>
+            Ext.BLANK_IMAGE_URL = "theme/app/img/blank.gif";
+            OpenLayers.ImgPath = "externals/openlayers/img/";
+        </script>
+        <script>
+// this is where your application code goes
+
+var view1,view2,view3,view4;
+startTime = OpenLayers.Date.parse('2004-12-01').toISOString();
+Ext.onReady(function() {
+    view1 = new gxp.Viewer({
+        portalConfig: {
+            id: "viewer1",
+            xtype: "panel",
+            flex: 1
+        },
+        mapItems: [{
+            xtype: "gx_zoomslider",
+            vertical: true,
+            height: 100
+        }],
+        // configuration of all tool plugins for this application
+        tools: [{
+            ptype: 'gxp_playback',
+            outputConfig: {
+                dynamicRange: false
+            }
+        }],
+        
+        // layer sources
+        defaultSourceType: "gxp_wmssource",
+        sources: {
+            ol: {
+                ptype: 'gxp_olsource'
+            },
+            osm: {
+                ptype: "gxp_osmsource"
+            },
+            mapstory: {
+                url: '/geoserver/wms',
+                version: '1.1.1'
+            }
+        },
+        
+        // map and layers
+        map: {
+            id: "map1",
+            region: 'center',
+            projection: "EPSG:900913",
+            units: "m",
+            maxResolution: 156543.0339,
+            center: [-10965000, 2623100],
+            zoom: 5,
+            layers: [{
+                source: "osm",
+                name: "mapnik",
+                group: "background"
+            }, {
+                source: "mapstory",
+                name: 'geonode:mexmurder',
+                tiled: false,
+                title: 'Cumulative Deaths'
+            }, {
+                source: "mapstory",
+                name: 'geonode:mexmurder',
+                styles: 'LabelSized'
+            }]
+        },
+        listeners: {
+            portalReady: createViewport
+        }
+    });
+        view2 = new gxp.Viewer({
+        portalConfig: {id: "viewer2", xtype: "panel", flex: 1},
+        mapItems: [
+            {
+                xtype: "gx_zoomslider",
+                vertical: true,
+                height: 100
+            }
+        ],
+        // configuration of all tool plugins for this application
+        tools: [{
+            ptype:'gxp_playback',
+            outputConfig:{
+              dynamicRange:false
+            }
+        }],
+        
+        // layer sources
+        defaultSourceType: "gxp_wmssource",
+        sources: {
+            ol: {
+                ptype:'gxp_olsource'
+            },
+            osm: {
+                ptype: "gxp_osmsource"
+            },
+            mapstory:{
+                url:'/geoserver/wms',
+                version:'1.1.1'
+            }
+        },
+        
+        // map and layers
+        map: {
+            id: "map2",
+            region: 'center',
+            projection: "EPSG:900913",
+            units: "m",
+            maxResolution: 156543.0339,
+            center: [-10965000, 2623100],
+            zoom: 5,
+            layers: [{
+                source: "osm",
+                name: "mapnik",
+                group: "background"
+            }, {
+                source: "mapstory",
+                name:'geonode:mexmurder',
+                tiled:false,
+                styles:'Murder Hotspots',
+                title:'Current Deaths'
+            },{
+                source:"mapstory",
+                name:'geonode:mexmurder',
+                styles:'LabelPlain',
+                title:false
+            }]
+        },
+        listeners: {
+            portalReady: createViewport
+        }
+    });
+        view3 = new gxp.Viewer({
+        portalConfig: {id: "viewer3", xtype: "panel", flex: 1},
+        mapItems: [
+            {
+                xtype: "gx_zoomslider",
+                vertical: true,
+                height: 100
+            }
+        ],
+        // configuration of all tool plugins for this application
+        tools: [{
+            ptype:'gxp_playback',
+            playbackMode:'ranged',
+            rangedPlayInterval:12,
+            outputConfig:{
+              dynamicRange:false
+            }
+        }],
+        
+        // layer sources
+        defaultSourceType: "gxp_wmssource",
+        sources: {
+            ol: {
+                ptype:'gxp_olsource'
+            },
+            osm: {
+                ptype: "gxp_osmsource"
+            },
+            mapstory:{
+                url:'/geoserver/wms',
+                version:'1.1.1'
+            }
+        },
+        
+        // map and layers
+        map: {
+            id: "map3",
+            region: 'center',
+            projection: "EPSG:900913",
+            units: "m",
+            maxResolution: 156543.0339,
+            center: [-10965000, 2623100],
+            zoom: 5,
+            layers: [{
+                source: "osm",
+                name: "mapnik",
+                group: "background"
+            }, {
+                source: "mapstory",
+                name:'geonode:mexmurder',
+                tiled:false,
+                title:'Murders By Year',
+                styles:'Murder Hotspots'
+            },{
+                source:"mapstory",
+                name:'geonode:mexmurder',
+                styles:'LabelSized'
+            }]
+        },
+            listeners: {
+                portalReady: createViewport
+            }
+    });
+        view4 = new gxp.Viewer({
+            portalConfig: {
+                id: "viewer4",
+                xtype: "panel",
+                flex: 1
+            },
+            mapItems: [{
+                xtype: "gx_zoomslider",
+                vertical: true,
+                height: 100
+            }],
+            // configuration of all tool plugins for this application
+            tools: [{
+                ptype: 'gxp_playback',
+                playbackMode: 'ranged',
+                rangedPlayInterval: 12,
+                outputConfig: {
+                    dynamicRange: false
+                }
+            }],
+            
+            // layer sources
+            defaultSourceType: "gxp_wmssource",
+            sources: {
+                ol: {
+                    ptype: 'gxp_olsource'
+                },
+                osm: {
+                    ptype: "gxp_osmsource"
+                },
+                mapstory: {
+                    url: '/geoserver/wms',
+                    version: '1.1.1'
+                }
+            },
+            
+            // map and layers
+            map: {
+                id: "map4",
+                region: 'center',
+                projection: "EPSG:900913",
+                units: "m",
+                maxResolution: 156543.0339,
+                center: [-10965000, 2623100],
+                zoom: 5,
+                layers: [{
+                    source: "osm",
+                    name: "mapnik",
+                    group: "background"
+                }, {
+                    source: "mapstory",
+                    name: 'geonode:mexmurder',
+                    tiled: false,
+                    title: 'Seasons of Death',
+                    styles: 'Murder Hotspots'
+                }, {
+                    source: "mapstory",
+                    name: 'geonode:mexmurder',
+                    styles: 'LabelPlain'
+                }]
+            },
+            listeners: {
+                portalReady: createViewport
+            }
+        });
+    
+    var portalsReady = 0;
+function createViewport() {
+    portalsReady++;
+    if (portalsReady == 4) {
+        new Ext.Viewport({
+            layout: 'fit',
+            items: [{
+                layout: 'vbox',
+                layoutConfig: {
+                    align: 'stretch',
+                    pack: 'start'
+                },
+                defaults: {
+                    flex: 1
+                },
+                items: [{
+                    layout: 'hbox',
+                    layoutConfig: {
+                        align: 'stretch',
+                        pack: 'start'
+                    },
+                    items: ["viewer1", "viewer2"]
+                }, {
+                    layout: 'hbox',
+                    layoutConfig: {
+                        align: 'stretch',
+                        pack: 'start'
+                    },
+                    items: ["viewer3", "viewer4"]
+                }]
+            }]
+        }).render();
+    }
+}
+});        
+        </script>
+    </head>
+    <body></body>
+</html>
