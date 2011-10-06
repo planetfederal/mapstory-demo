@@ -32,6 +32,11 @@ Ext.onReady(function() {
             ptype: "gxp_timeline",
             outputTarget: "timeline-container"
         }, {
+            ptype: "gxp_playback",
+            outputConfig: {
+                dynamicRange: false
+            }
+        }, {
             ptype: "gxp_addlayers",
             actionTarget: "tree.tbar"
         }, {
