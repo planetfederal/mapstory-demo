@@ -15,4 +15,4 @@
 	url = git://github.com/tschaub/buildkit.git
 [submodule "app/static/externals/timemanager"]
 	path = app/static/externals/timemanager
-	url = git://github.com/MattPriour/TimeManager_OpenLayers-Addin.git
+	url = git://github.com/mpriour/TimeManager_OpenLayers-Addin.git
