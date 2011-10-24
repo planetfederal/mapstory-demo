@@ -30,9 +30,11 @@ Ext.onReady(function() {
             outputTarget: "tree-container"
         }, {
             ptype: "gxp_timeline",
-            outputTarget: "timeline-container"
+            outputTarget: "timeline-container",
+            playbackTool: "playback-tool"
         }, {
             ptype: "gxp_playback",
+            id: "playback-tool",
             outputConfig: {
                 dynamicRange: false
             }
