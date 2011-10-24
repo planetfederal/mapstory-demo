@@ -7,6 +7,7 @@
 
     <property name="build" location="build"/>
     <property name="app.proxy.geoserver" value="http://mapstory.demo.opengeo.org:8080/geoserver"/>
+    <property name="app.proxy.geonode" value="http://mapstory.demo.opengeo.org"/>
     <property name="app.port" value="8080"/>
     <condition property="git" value="git.cmd" else="git">
         <os family="windows"/>
@@ -83,6 +84,7 @@
     <target name="debug">
         <java jar="externals/ringo/run.jar" fork="true">
             <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
+            <sysproperty key="app.proxy.geonode" value="${app.proxy.geonode}"/>
             <sysproperty key="ringo.home" path="externals/ringo"/>
             <arg path="app/main.js"/>
             <arg line="-p ${app.port}"/>
@@ -92,6 +94,7 @@
     <target name="debugall">
         <java jar="externals/ringo/run.jar" fork="true">
             <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
+            <sysproperty key="app.proxy.geonode" value="${app.proxy.geonode}"/>
             <sysproperty key="ringo.home" path="externals/ringo"/>
             <arg value="-d"/>
             <arg path="app/main.js"/>

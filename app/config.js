@@ -24,6 +24,24 @@ if (java.lang.System.getProperty("app.debug")) {
             [(/^\/geoserver\/(.*)/), require("./proxy").pass({url: geoserver, preserveHost: true})]
         );
     }
+
+    // proxy a remote geonode on / by setting proxy.geonode to remote URL
+    // only recommended for debug mode
+    var geonode = java.lang.System.getProperty("app.proxy.geonode");
+    if (geonode) {
+        if (geonode.charAt(geonode.length-1) !== "/") {
+            geonode = geonode + "/";
+        }
+        var geonodeUrls = ["maps/"];
+        var url;
+        for (var i=geonodeUrls.length-1; i>=0; --i) {
+            url = geonodeUrls[i];
+            urls.push(
+                [new RegExp("^\\/" + url.replace("/", "\\/") + "(.*)"), require("./proxy").pass({url: geonode + url, allowAuth: true})]
+            );
+        }
+    }
+
 }
 
 exports.urls = urls;
