@@ -80,9 +80,9 @@ Ext.onReady(function() {
                 name: "mapnik",
                 group: "background"                
             }, {
-            //     source: "local",
-            //     name: "geonode:mexmurder"
-            // }, {
+                 source: "local",
+                 name: "geonode:mexmurder"
+            }, {
                 source: "local",
                 name: "geonode:conflicts"
             }],
