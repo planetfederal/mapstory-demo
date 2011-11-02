@@ -5,10 +5,11 @@ Ext.onReady(function() {
             "map-panel", 
             {
                  id: "timeline-container",
-                 xtype: "container",
+                 xtype: "panel",
+                 tbar: [],
                  layout: "fit",
                  region: "south",
-                 height: 250
+                 height: 175
              }, {
                  id: "tree-container",
                  xtype: "panel",
@@ -30,7 +31,11 @@ Ext.onReady(function() {
             outputTarget: "tree-container"
         }, {
             ptype: "gxp_timeline",
+            id: "timeline-tool",
             outputTarget: "timeline-container",
+            outputConfig: {
+                title: null
+            },
             playbackTool: "playback-tool"
         }, {
             ptype: "gxp_playback",
@@ -44,6 +49,10 @@ Ext.onReady(function() {
         }, {
             ptype: "gxp_removelayer",
             actionTarget: ["tree.tbar", "tree.contextMenu"]
+        }, {
+            ptype: "gxp_timelinelayers",
+            timelineTool: "timeline-tool",
+            actionTarget: "timeline-container.tbar"
         }, {
             ptype: "gxp_zoomtoextent"
         }, {
@@ -79,10 +88,10 @@ Ext.onReady(function() {
                 source: "osm",
                 name: "mapnik",
                 group: "background"                
-            }, {
+            },/* {
                  source: "local",
                  name: "geonode:mexmurder"
-            }, {
+            },*/ {
                 source: "local",
                 name: "geonode:conflicts"
             }],
