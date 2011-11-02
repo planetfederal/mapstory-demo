@@ -88,10 +88,10 @@ Ext.onReady(function() {
                 source: "osm",
                 name: "mapnik",
                 group: "background"                
-            },/* {
+            }, {
                  source: "local",
                  name: "geonode:mexmurder"
-            },*/ {
+            }, {
                 source: "local",
                 name: "geonode:conflicts"
             }],
