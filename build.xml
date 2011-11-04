@@ -6,8 +6,8 @@
     </description>
 
     <property name="build" location="build"/>
-    <property name="app.proxy.geoserver" value="http://mapstory.demo.opengeo.org:8080/geoserver"/>
-    <property name="app.proxy.geonode" value="http://mapstory.demo.opengeo.org"/>
+    <property name="app.proxy.geoserver" value="http://mapstory.dev.opengeo.org/geoserver"/>
+    <property name="app.proxy.geonode" value="http://mapstory.dev.opengeo.org"/>
     <property name="app.port" value="8080"/>
     <condition property="git" value="git.cmd" else="git">
         <os family="windows"/>
