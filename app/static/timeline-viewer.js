@@ -6,6 +6,9 @@ Ext.onReady(function() {
             {
                  id: "timeline-container",
                  xtype: "panel",
+                 split: true,
+                 collapsed: true,
+                 collapsible: true,
                  tbar: [],
                  layout: "fit",
                  region: "south",
