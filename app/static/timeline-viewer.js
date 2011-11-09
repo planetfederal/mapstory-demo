@@ -33,6 +33,8 @@ Ext.onReady(function() {
             },
             outputTarget: "tree-container"
         }, {
+            ptype: "gxp_annotation"
+        }, {
             ptype: "gxp_timeline",
             id: "timeline-tool",
             outputTarget: "timeline-container",
@@ -94,10 +96,10 @@ Ext.onReady(function() {
             }, {
                  source: "local",
                  name: "geonode:mexmurder"
-            }, {
+            }/*, {
                 source: "local",
                 name: "geonode:conflicts"
-            }],
+            }*/],
             items: [{
                 xtype: "gx_zoomslider",
                 vertical: true,
